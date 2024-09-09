@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-app-service
+  namespace: eks-dev-testing-papertrl
+spec:
+  selector:
+    app: backend-app
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP

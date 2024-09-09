@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: papertrl-vp
+  namespace: eks-dev-testing-papertrl  # Replace with your namespace
+spec:
+  selector:
+    app: papertrl-vp         # Ensure this matches the label in your deployment
+  ports:
+    - protocol: TCP
+      port: 9002                # The port exposed by the service
+      targetPort: 9002          # The port your container listens on
+  type: ClusterIP               # Internal service (default type)

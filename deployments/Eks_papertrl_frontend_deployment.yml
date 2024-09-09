@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: papertrl-frontend-deployment
+  namespace: eks-dev-testing-papertrl
+  labels:
+    app: papertrl-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: papertrl-ui
+  template:
+    metadata:
+      labels:
+        app: papertrl-ui
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: papertrl-ui
+        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/papertrl-frontend:latest
+        ports:
+        - name: http
+          containerPort: 80
+        imagePullPolicy: Always
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: frontend_node_group  # Ensure it runs on the frontend node group
