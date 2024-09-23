@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: papertrl-message-deployment
+  namespace: eks-dev-testing-papertrl
+  labels:
+    app: papertrl-message
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: papertrl-message
+  template:
+    metadata:
+      labels:
+        app: papertrl-message
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: papertrl-message
+        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/message-service:2.0.0
+        ports:
+        - name: http
+          containerPort: 5020
+        env:
+        - name: DB_HOST
+          value: "dev-eks.cawybcg7o5p2.us-east-2.rds.amazonaws.com" # Replace with your RDS endpoint
+        - name: DB_PORT
+          value: "3306" # Default MySQL/MariaDB port
+        - name: DB_USERNAME
+          value: "papertrl" # Replace with your DB username
+        - name: DB_PASSWORD
+          value: "ptmariadbcom" # Replace with your DB password
+        imagePullPolicy: IfNotPresent
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: backend-node-group  # Ensure it runs on the frontend node group
