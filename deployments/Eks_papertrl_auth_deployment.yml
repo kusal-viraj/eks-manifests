@@ -19,27 +19,39 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - arm64
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+                      - arm64
       containers:
-      - name: papertrl-auth
-        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/auth-service:2.0.2
-        ports:
-        - name: http
-          containerPort: 9000
-        env:
-        - name: DB_HOST
-          value: "dev-eks.cawybcg7o5p2.us-east-2.rds.amazonaws.com" # Replace with your RDS endpoint
-        - name: DB_PORT
-          value: "3306" # Default MySQL/MariaDB port
-        - name: DB_USERNAME
-          value: "papertrl" # Replace with your DB username
-        - name: DB_PASSWORD
-          value: "ptmariadbcom" # Replace with your DB password
-        imagePullPolicy: IfNotPresent
+        - name: papertrl-auth
+          image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/auth-service:2.0.2
+          ports:
+            - name: http
+              containerPort: 9000
+          env:
+            - name: DB_HOST
+              value: "dev-eks.cawybcg7o5p2.us-east-2.rds.amazonaws.com" # Replace with your RDS endpoint
+            - name: DB_PORT
+              value: "3306" # Default MySQL/MariaDB port
+            - name: DB_USERNAME
+              value: "papertrl" # Replace with your DB username
+            - name: DB_PASSWORD
+              value: "ptmariadbcom" # Replace with your DB password
+          imagePullPolicy: IfNotPresent
+
+          # Mount EFS volume to /papertrl in the container
+          volumeMounts:
+            - name: efs-papertrl
+              mountPath: /papertrl      # Mount the EFS access point at /papertrl in the pod
+
       nodeSelector:
-        eks.amazonaws.com/nodegroup: backend-node-group  # Ensure it runs on the frontend node group
+        eks.amazonaws.com/nodegroup: backend-node-group  # Ensure it runs on the backend node group
+
+      # Define the EFS volume
+      volumes:
+        - name: efs-papertrl
+          persistentVolumeClaim:
+            claimName: efs-pvc # Replace with your actual PVC name for the EFS access point
