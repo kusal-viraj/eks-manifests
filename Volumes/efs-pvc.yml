@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: efs-pvc
+  namespace: eks-dev-testing-papertrl   # Ensure the namespace matches the pod's namespace
 spec:
   accessModes:
     - ReadWriteMany
