@@ -41,5 +41,17 @@ spec:
         - name: DB_PASSWORD
           value: "ptmariadbcom" # Replace with your DB password
         imagePullPolicy: IfNotPresent
+
+        # Mount EFS volume to /papertrl in the container
+        volumeMounts:
+          - name: efs-papertrl
+            mountPath: /papertrl      # Mount the EFS access point at /papertrl in the pod
+
       nodeSelector:
         eks.amazonaws.com/nodegroup: backend-node-group  # Ensure it runs on the frontend node group
+
+      # Define the EFS volume
+      volumes:
+        - name: efs-papertrl
+          persistentVolumeClaim:
+            claimName: efs-pvc # Replace with your actual PVC name for the EFS access point
