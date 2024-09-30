@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: git-clone-efs
+  namespace: eks-dev-testing-papertrl
+spec:
+  template:
+    spec:
+      containers:
+        - name: git-clone-container
+          image: alpine/git:latest    # Use a git-capable image
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cd /papertrl/data/papertrlAppFiles
+              if [ -d ".git" ]; then
+                echo "Git repository exists. Pulling latest changes."
+                git pull origin main
+              else
+                echo "Cloning the repository..."
+                git clone 'https://github.com/kusal-viraj/eks-manifests.git' .
+                git sparse-checkout init --cone
+                git sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
+              fi
+          volumeMounts:
+            - name: efs-volume
+              mountPath: /papertrl    # Mount point for EFS
+      restartPolicy: OnFailure
+      volumes:
+        - name: efs-volume
+          persistentVolumeClaim:
+            claimName: efs-pvc  # PVC for EFS
