@@ -15,7 +15,7 @@ spec:
             - |
               if [ -d "/papertrl/data/papertrlAppFiles/.git" ]; then
               echo "Git repository exists in /papertrl/data/papertrlAppFiles. Pulling latest changes."
-              git -C /papertrl/data/papertrlAppFiles pull origin main
+              git -C /papertrl/data/papertrlAppFiles pull origin master
               else
               echo "Cloning the repository into /papertrl/data/papertrlAppFiles..."
               mkdir -p /papertrl/data/papertrlAppFiles  # Ensure the directory exists
