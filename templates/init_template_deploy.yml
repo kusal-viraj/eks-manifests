@@ -19,9 +19,9 @@ spec:
               else
               echo "Cloning the repository into /papertrl/data/papertrlAppFiles..."
               mkdir -p /papertrl/data/papertrlAppFiles  # Ensure the directory exists
-              git clone 'https://github.com/kusal-viraj/eks-manifests.git' /papertrl/data/papertrlAppFiles
+              git clone 'https://github.com/kusal-viraj/eks-template-deploy.git' /papertrl/data/papertrlAppFiles
               git -C /papertrl/data/papertrlAppFiles sparse-checkout init --cone
-              git -C /papertrl/data/papertrlAppFiles sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
+              git -C /papertrl/data/papertrlAppFiles sparse-checkout set eks-template-deploy/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
               
                   # Verify the contents of the directory after cloning
               echo "Contents of /papertrl/data/papertrlAppFiles:"
