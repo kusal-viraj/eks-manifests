@@ -27,6 +27,10 @@ spec:
             - name: efs-papertrl
               mountPath: /papertrl    # Mount point for EFS
       restartPolicy: OnFailure
+
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: backend-node-group  # Ensure it runs on the backend node group
+
       volumes:
         - name: efs-papertrl
           persistentVolumeClaim:
