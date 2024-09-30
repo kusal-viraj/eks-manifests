@@ -13,15 +13,15 @@ spec:
             - /bin/sh
             - -c
             - |
-              cd /papertrl/data/papertrlAppFiles
-              if [ -d ".git" ]; then
-                echo "Git repository exists. Pulling latest changes."
-                git pull origin main
+              if [ -d "/papertrl/data/papertrlAppFiles/.git" ]; then
+              echo "Git repository exists in /papertrl/data/papertrlAppFiles. Pulling latest changes."
+              git -C /papertrl/data/papertrlAppFiles pull origin main
               else
-                echo "Cloning the repository..."
-                git clone 'https://github.com/kusal-viraj/eks-manifests.git' .
-                git sparse-checkout init --cone
-                git sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
+              echo "Cloning the repository into /papertrl/data/papertrlAppFiles..."
+              mkdir -p /papertrl/data/papertrlAppFiles  # Ensure the directory exists
+              git clone 'https://github.com/kusal-viraj/eks-manifests.git' /papertrl/data/papertrlAppFiles
+              git -C /papertrl/data/papertrlAppFiles sparse-checkout init --cone
+              git -C /papertrl/data/papertrlAppFiles sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
               fi
           volumeMounts:
             - name: efs-papertrl
