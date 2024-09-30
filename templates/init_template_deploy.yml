@@ -22,6 +22,10 @@ spec:
               git clone 'https://github.com/kusal-viraj/eks-manifests.git' /papertrl/data/papertrlAppFiles
               git -C /papertrl/data/papertrlAppFiles sparse-checkout init --cone
               git -C /papertrl/data/papertrlAppFiles sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
+              
+                  # Verify the contents of the directory after cloning
+              echo "Contents of /papertrl/data/papertrlAppFiles:"
+              ls -la /papertrl/data/papertrlAppFiles
               fi
           volumeMounts:
             - name: efs-papertrl
