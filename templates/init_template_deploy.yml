@@ -24,10 +24,10 @@ spec:
                 git sparse-checkout set papertrl_sys_deploy_releases_testing/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
               fi
           volumeMounts:
-            - name: efs-volume
+            - name: efs-papertrl
               mountPath: /papertrl    # Mount point for EFS
       restartPolicy: OnFailure
       volumes:
-        - name: efs-volume
+        - name: efs-papertrl
           persistentVolumeClaim:
             claimName: efs-pvc  # PVC for EFS
