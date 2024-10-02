@@ -18,7 +18,7 @@ spec:
               cd /papertrl/github_repo
               git sparse-checkout init --cone
               git sparse-checkout set 1.Testing-APP-papertrlAppFiles/papertrlAppFiles
-              ln -s /papertrl/github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/papertrlAppFiles
+              ln -s /papertrl/github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/
           volumeMounts:
             - name: efs-papertrl
               mountPath: /papertrl    # Mount point for EFS
