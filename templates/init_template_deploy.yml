@@ -13,15 +13,15 @@ spec:
             - /bin/sh
             - -c
             - |
-              git clone https://github.com/your-org/your-repo.git /github_repo
+              git clone https://github.com/your-org/your-repo.git /papertrl/github_repo
               # Optional sparse checkout if you only need part of the repo
-              cd /github_repo
+              cd /papertrl/github_repo
               git sparse-checkout init --cone
               git sparse-checkout set 1.Testing-APP-papertrlAppFiles/papertrlAppFiles
-              ln -s /github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/papertrlAppFiles
+              ln -s /papertrl/github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/papertrlAppFiles
           volumeMounts:
             - name: efs-papertrl
-              mountPath: /github_repo    # Mount point for EFS
+              mountPath: /papertrl    # Mount point for EFS
       restartPolicy: OnFailure
 
       nodeSelector:
