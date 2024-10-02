@@ -13,23 +13,15 @@ spec:
             - /bin/sh
             - -c
             - |
-              if [ -d "/papertrl/data/papertrlAppFiles/.git" ]; then
-              echo "Git repository exists in /papertrl/data/papertrlAppFiles. Pulling latest changes."
-              git -C /papertrl/data/papertrlAppFiles pull origin master
-              else
-              echo "Cloning the repository into /papertrl/data/papertrlAppFiles..."
-              mkdir -p /papertrl/data/papertrlAppFiles  # Ensure the directory exists
-              git clone 'https://github.com/kusal-viraj/eks-template-deploy.git' /papertrl/data/papertrlAppFiles
-              git -C /papertrl/data/papertrlAppFiles sparse-checkout init --cone
-              git -C /papertrl/data/papertrlAppFiles sparse-checkout set eks-template-deploy/1.Testing-APP-papertrlAppFiles/papertrlAppFiles
-              
-                  # Verify the contents of the directory after cloning
-              echo "Contents of /papertrl/data/papertrlAppFiles:"
-              ls -la /papertrl/data/papertrlAppFiles
-              fi
+              git clone https://github.com/your-org/your-repo.git /github_repo
+              # Optional sparse checkout if you only need part of the repo
+              cd /github_repo
+              git sparse-checkout init --cone
+              git sparse-checkout set 1.Testing-APP-papertrlAppFiles/papertrlAppFiles
+              ln -s /github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/papertrlAppFiles
           volumeMounts:
             - name: efs-papertrl
-              mountPath: /papertrl    # Mount point for EFS
+              mountPath: /github_repo    # Mount point for EFS
       restartPolicy: OnFailure
 
       nodeSelector:
