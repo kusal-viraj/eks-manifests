@@ -13,7 +13,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              git clone https://github.com/your-org/your-repo.git /papertrl/github_repo
+              git clone https://github.com/kusal-viraj/eks-template-deploy.git /papertrl/github_repo
               # Optional sparse checkout if you only need part of the repo
               cd /papertrl/github_repo
               git sparse-checkout init --cone
