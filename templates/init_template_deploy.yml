@@ -13,12 +13,24 @@ spec:
             - /bin/sh
             - -c
             - |
-              git clone https://github.com/kusal-viraj/eks-template-deploy.git /papertrl/github_repo
+              REPO_URL="https://github.com/kusal-viraj/eks-template-deploy.git"
+              REPO_DIR="/papertrl/github_repo"
+          
+              # Check if the repository is already present by looking for a .git directory
+              if [ -d "$REPO_DIR/.git" ]; then
+              echo "Repository already exists, pulling the latest changes..."
+              cd $REPO_DIR
+              git pull origin master  # Replace 'master' with the branch you want to pull from
+              else
+              echo "Cloning the repository..."
+              git clone $REPO_URL $REPO_DIR
+              fi
+              
               # Optional sparse checkout if you only need part of the repo
-              cd /papertrl/github_repo
+              cd $REPO_DIR
               git sparse-checkout init --cone
               git sparse-checkout set 1.Testing-APP-papertrlAppFiles/papertrlAppFiles
-              ln -s /papertrl/github_repo/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/
+              ln -s $REPO_DIR/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/
           volumeMounts:
             - name: efs-papertrl
               mountPath: /papertrl    # Mount point for EFS
