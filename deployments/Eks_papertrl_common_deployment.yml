@@ -27,7 +27,7 @@ spec:
                 - arm64
       containers:
       - name: papertrl-common
-        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/common-service:2.0.2
+        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/common-service:2.13.110
         ports:
         - name: http
           containerPort: 9008
