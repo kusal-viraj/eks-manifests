@@ -27,7 +27,7 @@ spec:
                 - arm64
       containers:
       - name: papertrl-proxy
-        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/proxy-service:2.13.113
+        image: 194978441177.dkr.ecr.us-east-2.amazonaws.com/proxy-service:2.13.114
         ports:
         - name: http
           containerPort: 8082
