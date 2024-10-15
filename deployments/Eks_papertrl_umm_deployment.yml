@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: papertrl-umm-deployment
-  namespace: eks-dev-testing-papertrl
+  namespace: dev
   labels:
     app: papertrl-umm
 spec:

@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: git-clone-efs
-  namespace: eks-dev-testing-papertrl
+  namespace: dev
 spec:
   template:
     spec:
@@ -23,6 +23,9 @@ spec:
               git pull origin master  # Replace 'master' with the branch you want to pull from
               else
               echo "Cloning the repository..."
+              mkdir -p /papertrl/github_repo
+              mkdir -p /papertrl/data
+              mkdir -p /papertrl/logs
               git clone $REPO_URL $REPO_DIR
               fi
               
@@ -33,7 +36,7 @@ spec:
               ln -s $REPO_DIR/1.Testing-APP-papertrlAppFiles/papertrlAppFiles /papertrl/data/
           volumeMounts:
             - name: efs-papertrl
-              mountPath: /papertrl    # Mount point for EFS
+              mountPath: /    # Mount point for EFS
       restartPolicy: OnFailure
 
       nodeSelector:
